@@ -2,10 +2,10 @@ import { GoogleGenAI, Type, FunctionDeclaration } from '@google/genai';
 
 // Resilient Model Fallback Ladder per Production Directives
 const MODEL_FALLBACK_LADDER = [
-  'gemini-3.6-flash',
-  'gemini-3.1-flash-lite',
-  'gemini-flash-latest',
-  'gemini-3.7-flash'
+  'gemini-2.0-flash',
+  'gemini-1.5-flash',
+  'gemini-1.5-flash-8b',
+  'gemini-2.0-flash-lite'
 ];
 
 function getGenAIClient(): GoogleGenAI {
@@ -472,29 +472,22 @@ Now perform Step 3 (reasoning) and Step 4: call create_staff_alert with:
 - category: "music" | "lighting" | "service" | "seating" | "menu"`;
 
     let geminiResponse: any = null;
-    try {
-      geminiResponse = await ai.models.generateContent({
-        model: 'gemini-3.8-flash',
-        contents: synthesisPrompt,
-        config: {
-          systemInstruction,
-          tools: [{ functionDeclarations: [createStaffAlertDeclaration] }],
-          temperature: 0.6,
-          maxOutputTokens: 600,
-        },
-      });
-    } catch (e1) {
-      console.warn('[Orchestrator Agent] Primary model call failed, falling back to gemini-3.6-flash:', e1);
-      geminiResponse = await ai.models.generateContent({
-        model: 'gemini-3.6-flash',
-        contents: synthesisPrompt,
-        config: {
-          systemInstruction,
-          tools: [{ functionDeclarations: [createStaffAlertDeclaration] }],
-          temperature: 0.6,
-          maxOutputTokens: 600,
-        },
-      });
+    for (const model of MODEL_FALLBACK_LADDER) {
+      try {
+        geminiResponse = await ai.models.generateContent({
+          model,
+          contents: synthesisPrompt,
+          config: {
+            systemInstruction,
+            tools: [{ functionDeclarations: [createStaffAlertDeclaration] }],
+            temperature: 0.6,
+            maxOutputTokens: 600,
+          },
+        });
+        if (geminiResponse) break;
+      } catch (e1: any) {
+        console.warn(`[Orchestrator Agent] Model ${model} call failed, trying next fallback:`, e1?.message || e1);
+      }
     }
 
     const functionCalls = geminiResponse?.functionCalls;
