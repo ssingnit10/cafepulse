@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Staff Dashboard — CaféPulse</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo-group">
+        <div class="logo-icon">☕</div>
+        <div>
+          <h1>CaféPulse</h1>
+          <p class="tagline">Staff Operations Dashboard</p>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="/" class="nav-btn">Customer View</a>
+        <a href="/dashboard" class="nav-btn active">Staff Dashboard</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="dashboard-header">
+      <div>
+        <span class="subheading">Atmosphere Telemetry</span>
+        <h2>Live Room Dashboard</h2>
+        <p class="desc">Auto-refreshes every 30 seconds</p>
+      </div>
+      <div class="dashboard-actions">
+        <span id="countdown-text" class="countdown-tag">Refreshing in 30s</span>
+        <button id="refresh-btn" class="secondary-btn">↻ Refresh Now</button>
+      </div>
+    </div>
+
+    <!-- Live room stats (count by mood_tag) -->
+    <div class="stats-grid">
+      <div class="stat-card focus-card">
+        <div class="stat-icon">📖</div>
+        <div class="stat-num" id="count-focus">0</div>
+        <div class="stat-label">Focus</div>
+        <p class="stat-sub">Quiet work & study</p>
+      </div>
+      <div class="stat-card social-card">
+        <div class="stat-icon">👥</div>
+        <div class="stat-num" id="count-social">0</div>
+        <div class="stat-label">Social</div>
+        <p class="stat-sub">Conversations & chats</p>
+      </div>
+      <div class="stat-card relaxed-card">
+        <div class="stat-icon">🍃</div>
+        <div class="stat-num" id="count-relaxed">0</div>
+        <div class="stat-label">Relaxed</div>
+        <p class="stat-sub">Reading & unwinding</p>
+      </div>
+      <div class="stat-card energized-card">
+        <div class="stat-icon">⚡</div>
+        <div class="stat-num" id="count-energized">0</div>
+        <div class="stat-label">Energized</div>
+        <p class="stat-sub">High momentum rush</p>
+      </div>
+    </div>
+
+    <!-- Visual vibe gauge -->
+    <div class="card vibe-gauge-card">
+      <div class="section-head">
+        <div>
+          <h3>Atmospheric Vibe Gauge</h3>
+          <p class="desc">Room mood composition</p>
+        </div>
+        <span id="total-patrons-gauge" class="badge-count">Total: 0</span>
+      </div>
+      <div class="gauge-bar">
+        <div id="bar-focus" class="gauge-segment seg-focus" style="width: 25%"></div>
+        <div id="bar-social" class="gauge-segment seg-social" style="width: 25%"></div>
+        <div id="bar-relaxed" class="gauge-segment seg-relaxed" style="width: 25%"></div>
+        <div id="bar-energized" class="gauge-segment seg-energized" style="width: 25%"></div>
+      </div>
+    </div>
+
+    <!-- Gemini Room Insight -->
+    <div class="card insight-card">
+      <div class="section-head">
+        <div>
+          <span class="subheading">Gemini Atmospheric Intelligence</span>
+          <h3>Room Insight</h3>
+        </div>
+        <button id="regen-insight-btn" class="secondary-btn">↻ Update Insight</button>
+      </div>
+      <blockquote id="room-insight-text" class="insight-quote">
+        "Analyzing current room dynamics..."
+      </blockquote>
+      <p class="insight-tip">💡 Tip: Use this insight to balance music playlist volume, adjust lighting, or prep specials.</p>
+    </div>
+
+    <!-- Recent check-ins table -->
+    <div class="card table-card">
+      <div class="section-head">
+        <h3>Recent Check-Ins Table</h3>
+        <p class="desc">Saved in Cloud SQL sessions table</p>
+      </div>
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Patron</th>
+              <th>Mood Tag</th>
+              <th>Vibe</th>
+              <th>Recommended Drink</th>
+            </tr>
+          </thead>
+          <tbody id="table-body">
+            <tr>
+              <td colspan="5" class="empty-state">Loading check-ins...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

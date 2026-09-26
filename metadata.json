@@ -1,0 +1,6 @@
+{
+  "name": "CaféPulse",
+  "description": "Smart café companion featuring real-time patron vibe analysis, drink recommendations, and live atmospheric staff dashboard powered by Gemini and Cloud SQL.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

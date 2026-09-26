@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CaféPulse — Smart Café Companion</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo-group">
+        <div class="logo-icon">☕</div>
+        <div>
+          <h1>CaféPulse</h1>
+          <p class="tagline">Smart Café Companion</p>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="/" class="nav-btn active">Customer View</a>
+        <a href="/dashboard" class="nav-btn">Staff Dashboard</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="two-col-layout">
+      <!-- Left: Vibe Input & Rec -->
+      <section class="card vibe-section">
+        <span class="subheading">Barista Sommelier · Gemini</span>
+        <h2>What's your vibe today?</h2>
+        <p class="desc">Describe your mood or task in one sentence. We'll tune your beverage to match.</p>
+
+        <form id="vibe-form">
+          <div class="form-group">
+            <label for="vibe-text">Your Current Vibe</label>
+            <textarea id="vibe-text" rows="3" placeholder="e.g. Deep code flow on a difficult bug, need sharp steady focus..." required maxlength="300"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="display-name">Display Name (Optional)</label>
+            <input type="text" id="display-name" placeholder="e.g. Maya, Table 4" maxlength="50">
+          </div>
+
+          <div class="quick-tags">
+            <button type="button" class="quick-btn" data-vibe="Writing thesis proposal, need deep calm focus">Deep Work</button>
+            <button type="button" class="quick-btn" data-vibe="Catching up with an old friend over stories">Catching Up</button>
+            <button type="button" class="quick-btn" data-vibe="Slow morning reading a paperback novel">Slow Sunday</button>
+            <button type="button" class="quick-btn" data-vibe="Midday slump, need an electrifying jolt">Need Energy</button>
+          </div>
+
+          <button type="submit" id="submit-btn" class="primary-btn">
+            <span>✨ Tune My Vibe & Drink</span>
+          </button>
+        </form>
+
+        <div id="rec-card" class="rec-card hidden">
+          <div class="rec-header">
+            <span class="rec-kicker">Recommended Pour</span>
+            <span id="rec-mood-badge" class="mood-badge"></span>
+          </div>
+          <h3 id="rec-drink" class="rec-drink-title"></h3>
+          <p id="rec-reason" class="rec-reason-text"></p>
+          <button type="button" class="order-btn" onclick="alert('Ready to order! Show this screen to your barista.')">Order at Counter</button>
+        </div>
+
+        <div id="vibe-match-card" class="vibe-match-card hidden">
+          <div class="match-header">
+            <span class="match-title">✨ Vibe Match</span>
+            <span id="match-badge" class="mood-badge"></span>
+          </div>
+          <p id="match-text" class="match-body"></p>
+        </div>
+      </section>
+
+      <!-- Right: Others in the café -->
+      <section class="card others-section">
+        <div class="section-head">
+          <div>
+            <h2>Others in the café right now</h2>
+            <p class="desc">Check-ins from the last 30 minutes</p>
+          </div>
+          <span class="badge-count" id="patron-count">0 active</span>
+        </div>
+
+        <div id="recent-list" class="recent-list">
+          <p class="empty-state">Loading recent vibes...</p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
